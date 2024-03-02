@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     const productsSection = document.getElementById('products');
 
-    //Product data (replace with actual product data from your backend)
+    //Product data from your backend)
     const productsData = [
-        { id: 1, title: 'Lace Bra Set', price: 29.99, image: 'img/product1.jpg' },
-        { id: 2, title: 'Silk Chemise', price: 39.99, image: 'img/product2.jpg' },
+        { id: 1, title: 'Lace Bra Set', price: 29.99, image: 'https://raw.githubusercontent.com/christabely/Product-Page/main/assets/images/Set6.jpeg' },
+        { id: 2, title: 'Silk Thong, price: 39.99, image: './asset/images/Panties51.jpeg' },
         // Add more product data as needed
     ];
 
