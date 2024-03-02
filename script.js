@@ -1,65 +1,58 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const productsSection = document.getElementById('products');
-
-    //Product data from your backend)
-    const productsData = [
-        { id: 1, title: 'Lace Bra Set', price: 29.99, image: 'https://raw.githubusercontent.com/christabely/Product-Page/main/assets/images/Set6.jpeg' },
-        { id: 2, title: 'Silk Thong, price: 39.99, image: './asset/images/Panties51.jpeg' },
-        // Add more product data as needed
-    ];
-
-    // Wishlist (replace with actual data or fetch from backend)
-    let wishlist = [];
-
-    // Function to toggle the wishlist status of a product
-    function toggleWishlist(productId) {
-        const index = wishlist.indexOf(productId);
-        if (index === -1) {
-            wishlist.push(productId);
-        } else {
-            wishlist.splice(index, 1);
-        }
-        updateWishlistUI();
-    }
-
-    // Function to update the UI based on the wishlist
-    function updateWishlistUI() {
-        const productCards = document.querySelectorAll('.product-card');
-        productCards.forEach(card => {
-            const productId = parseInt(card.dataset.productId);
-
-            if (wishlist.includes(productId)) {
-                card.classList.add('starred');
-            } else {
-                card.classList.remove('starred');
+$(document).ready(function() {
+    // Function to fetch products using AJAX
+    function fetchProducts() {
+        $.ajax({
+            url: 'products.json',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                displayProducts(data);
+            },
+            error: function(error) {
+                console.error('Error fetching products:', error);
             }
         });
     }
 
-    // Generate product cards
-    productsData.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-        productCard.dataset.productId = product.id;
+    // Function to display products
+    function displayProducts(products) {
+        const container = $('#products-container');
+        container.empty();
 
-        productCard.innerHTML = `
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.title}">
-            </div>
-            <div class="product-info">
-                <div class="product-title">${product.title}</div>
-                <div class="product-price">$${product.price.toFixed(2)}</div>
-                <span class="wishlist-icon" onclick="toggleWishlist(${product.id})">&#9734;</span>
-                <button onclick="addToCart(${product.id})">Add to Cart</button>
-            </div>
-        `;
+        products.forEach(product => {
+            const productElement = $('<div>').addClass('product');
 
-        productsSection.appendChild(productCard);
-    });
+            productElement.html(`
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>$${product.price}</p>
+                <div class="rating">${getStarRating(product.rating)}</div>
+                <button onclick="addToWishlist(${product.id})">Add to Wishlist</button>
+                <button onclick="addToCatalogue(${product.id})">Add to Catalogue</button>
+            `);
 
-    // Add this function to handle adding products to the cart
-    function addToCart(productId) {
-        // Implement your add to cart logic here
-        console.log(`Product with ID ${productId} added to the cart`);
+            container.append(productElement);
+        });
     }
+
+    // Function to generate star rating HTML
+    function getStarRating(rating) {
+        let stars = '';
+        for (let i = 0; i < rating; i++) {
+            stars += '★';
+        }
+        return stars;
+    }
+
+    // Dummy functions for adding to wishlist and catalogue
+    window.addToWishlist = function(productId) {
+        console.log(`Added product ${productId} to wishlist.`);
+    };
+
+    window.addToCatalogue = function(productId) {
+        console.log(`Added product ${productId} to catalogue.`);
+    };
+
+    // Fetch products on page load
+    fetchProducts();
 });
