@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     const productsSection = document.getElementById('products');
 
-    // Dummy product data (replace with actual product data from your backend)
+    //Product data (replace with actual product data from your backend)
     const productsData = [
         { id: 1, title: 'Lace Bra Set', price: 29.99, image: 'img/product1.jpg' },
         { id: 2, title: 'Silk Chemise', price: 39.99, image: 'img/product2.jpg' },
         // Add more product data as needed
     ];
 
-    // Dummy wishlist (replace with actual data or fetch from backend)
+    // Wishlist (replace with actual data or fetch from backend)
     let wishlist = [];
 
     // Function to toggle the wishlist status of a product
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Dynamically generate product cards
+    // Generate product cards
     productsData.forEach(product => {
         const productCard = document.createElement('div');
         productCard.classList.add('product-card');
